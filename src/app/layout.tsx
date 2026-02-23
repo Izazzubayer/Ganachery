@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import SmoothScroll from "@/components/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "Ganachery Pâtisserie — Artisanal Chocolates & Premium Dates | Est. 2020",
@@ -20,7 +21,9 @@ export default function RootLayout({
         <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
       </head>
       <body className="antialiased">
-        {children}
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
