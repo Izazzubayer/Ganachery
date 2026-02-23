@@ -46,7 +46,7 @@ export default function CollectionsPage() {
                 </div>
             </nav>
 
-            <section className="product pt-40 pb-24 min-h-screen" id="product" style={{ backgroundColor: 'var(--ivory-100)' }}>
+            <section className="product pt-40 pb-24 min-h-screen bg-[var(--ivory-100)]" id="product">
                 <div className="container">
                     <div className="section-header" data-aos="fade-up">
                         <span className="section-header__label">The Boutique</span>
@@ -109,8 +109,8 @@ export default function CollectionsPage() {
                 </div>
             </section>
 
-            <footer className="footer text-white py-12 text-center text-sm border-t" style={{ backgroundColor: 'var(--cocoa-900)', borderColor: 'var(--gold-500)' }}>
-                <p style={{ margin: 0 }}>&copy; 2026 Ganachery Pâtisserie. Artisanal Excellence.</p>
+            <footer className="footer bg-[var(--cocoa-900)] text-white py-12 text-center text-sm border-t border-[var(--gold-500)]">
+                &copy; 2026 Ganachery Pâtisserie. Artisanal Excellence.
             </footer>
         </>
     );

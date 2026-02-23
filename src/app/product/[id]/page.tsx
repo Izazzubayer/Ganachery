@@ -34,7 +34,7 @@ export default function ProductDetailPage() {
     }
 
     return (
-        <div className="min-h-screen" style={{ backgroundColor: 'var(--ivory-100)' }}>
+        <div className="bg-[var(--ivory-100)] min-h-screen">
             <nav className="nav nav--scrolled relative" id="main-nav" style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(26, 14, 10, 0.95)' }}>
                 <div className="nav__inner">
                     <Link href="/" className="nav__logo">
@@ -60,20 +60,20 @@ export default function ProductDetailPage() {
 
             <div className="container py-16 md:py-24">
                 {/* Breadcrumb */}
-                <div className="uppercase tracking-widest mb-12 text-xs" style={{ color: 'var(--neutral-500)' }} data-aos="fade-in">
-                    <Link href="/" className="hover:text-black transition-colors" style={{ color: 'inherit' }}>Home</Link>
-                    <span className="mx-3">/</span>
-                    <Link href="/collections" className="hover:text-black transition-colors" style={{ color: 'inherit' }}>Collections</Link>
-                    <span className="mx-3">/</span>
-                    <span style={{ color: 'var(--gold-500)' }}>{product.name}</span>
+                <div className="text-[0.65rem] uppercase tracking-widest text-[var(--neutral-500)] mb-12" data-aos="fade-in">
+                    <Link href="/" className="hover:text-[var(--gold-500)]">Home</Link>
+                    <span className="mx-2">/</span>
+                    <Link href="/collections" className="hover:text-[var(--gold-500)]">Collections</Link>
+                    <span className="mx-2">/</span>
+                    <span className="text-[var(--gold-500)]">{product.name}</span>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-32">
                     {/* Image Gallery */}
                     <div className="relative" data-aos="fade-right">
-                        <div className="aspect-[4/5] rounded-xl overflow-hidden bg-white relative" style={{ boxShadow: 'var(--shadow-xl)' }}>
+                        <div className="aspect-[4/5] rounded-lg overflow-hidden shadow-[var(--shadow-xl)] bg-white relative">
                             {product.badge && (
-                                <div className="absolute top-6 left-6 z-10 text-[0.65rem] font-bold uppercase tracking-widest px-4 py-2 rounded-sm" style={{ backgroundColor: 'var(--gold-500)', color: 'var(--cocoa-900)' }}>
+                                <div className="absolute top-6 left-6 z-10 bg-[var(--gold-500)] text-[var(--cocoa-900)] text-[0.65rem] font-bold uppercase tracking-widest px-4 py-2 rounded-sm">
                                     {product.badge}
                                 </div>
                             )}
@@ -83,51 +83,51 @@ export default function ProductDetailPage() {
 
                     {/* Product Info */}
                     <div className="flex flex-col justify-center" data-aos="fade-left">
-                        <span className="text-[0.6rem] font-bold uppercase tracking-[0.2em] mb-4" style={{ color: 'var(--gold-500)' }}>{product.category}</span>
-                        <h1 className="text-4xl md:text-5xl lg:text-5xl font-light leading-tight mb-4" style={{ fontFamily: 'var(--font-heading)', color: 'var(--cocoa-800)' }}>{product.name}</h1>
-                        <div className="tracking-widest text-sm mb-4" style={{ color: 'var(--gold-500)' }}>★★★★★ <span className="text-xs ml-2" style={{ color: 'var(--neutral-400)' }}>(Boutique Reviews)</span></div>
-                        <p className="text-xl font-bold tracking-widest mb-8" style={{ color: 'var(--cocoa-600)' }}>{product.price}</p>
+                        <span className="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-[var(--gold-500)] mb-4">{product.category}</span>
+                        <h1 className="font-[var(--font-heading)] text-4xl md:text-5xl lg:text-6xl font-light text-[var(--cocoa-800)] leading-tight mb-4">{product.name}</h1>
+                        <div className="text-[var(--gold-500)] tracking-widest text-sm mb-4">★★★★★ <span className="text-[var(--neutral-400)] text-xs ml-2">(Boutique Reviews)</span></div>
+                        <p className="text-xl font-bold text-[var(--cocoa-600)] tracking-widest mb-8">{product.price}</p>
 
-                        <p className="text-[0.95rem] leading-loose mb-10 pb-10 border-b" style={{ color: 'var(--neutral-600)', borderColor: 'var(--gold-100)' }}>
+                        <p className="text-[0.95rem] text-[var(--neutral-600)] leading-loose mb-10 pb-10 border-b border-[var(--gold-100)]">
                             {product.longDescription}
                         </p>
 
                         <div className="mb-10">
-                            <h4 className="text-[0.7rem] uppercase tracking-widest font-bold mb-4" style={{ color: 'var(--cocoa-800)' }}>Variant</h4>
-                            <div className="inline-block border px-6 py-3 rounded-md text-sm font-medium" style={{ borderColor: 'var(--gold-500)', color: 'var(--cocoa-800)', backgroundColor: 'var(--gold-100)' }}>
+                            <h4 className="text-[0.7rem] uppercase tracking-widest font-bold text-[var(--cocoa-800)] mb-4">Variant</h4>
+                            <div className="inline-block border border-[var(--gold-500)] text-[var(--cocoa-800)] px-6 py-3 rounded-md text-sm font-medium bg-[var(--gold-100)]">
                                 {product.variant}
                             </div>
                         </div>
 
                         <div className="flex items-center gap-6 mb-12">
-                            <div className="flex items-center border rounded-md" style={{ borderColor: 'var(--neutral-300)', height: '56px' }}>
-                                <button className="px-5 text-lg h-full flex items-center hover:bg-black/5 transition-colors" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-                                <span className="w-10 text-center font-bold flex items-center justify-center h-full border-x w-10 border-black/10">{qty}</span>
-                                <button className="px-5 text-lg h-full flex items-center hover:bg-black/5 transition-colors" onClick={() => setQty(q => q + 1)}>+</button>
+                            <div className="flex items-center border border-[var(--neutral-300)] rounded-md h-14">
+                                <button className="px-5 text-lg" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
+                                <span className="w-8 text-center font-bold">{qty}</span>
+                                <button className="px-5 text-lg" onClick={() => setQty(q => q + 1)}>+</button>
                             </div>
-                            <button className="btn btn--primary flex-1" style={{ margin: 0, height: '56px', fontSize: '0.8rem', padding: '0 24px' }}>
+                            <button className="btn btn--primary flex-1 h-14 text-[0.8rem]" style={{ margin: 0 }}>
                                 Add to Box — {product.price}
                             </button>
                         </div>
 
-                        <div className="p-6 md:p-8 rounded-lg" style={{ backgroundColor: 'var(--ivory-200)' }}>
+                        <div className="bg-[var(--ivory-200)] p-6 md:p-8 rounded-lg">
                             <div className="flex items-start gap-4 mb-6">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C7A157" strokeWidth="1.5" className="flex-shrink-0 mt-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold-500)" strokeWidth="1.5" className="flex-shrink-0 mt-1">
                                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                 </svg>
                                 <div>
-                                    <h5 className="text-[0.8rem] uppercase tracking-widest font-bold mb-2" style={{ color: 'var(--cocoa-800)' }}>Artisanal Ingredients</h5>
-                                    <p className="text-[0.85rem] leading-relaxed" style={{ color: 'var(--neutral-600)' }}>{product.ingredients}</p>
+                                    <h5 className="text-[0.8rem] uppercase tracking-widest font-bold text-[var(--cocoa-800)] mb-2">Artisanal Ingredients</h5>
+                                    <p className="text-[0.85rem] text-[var(--neutral-600)] leading-relaxed">{product.ingredients}</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C7A157" strokeWidth="1.5" className="flex-shrink-0 mt-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold-500)" strokeWidth="1.5" className="flex-shrink-0 mt-1">
                                     <circle cx="12" cy="12" r="10" />
                                     <polyline points="12 6 12 12 16 14" />
                                 </svg>
                                 <div>
-                                    <h5 className="text-[0.8rem] uppercase tracking-widest font-bold mb-2" style={{ color: 'var(--cocoa-800)' }}>Care & Storage</h5>
-                                    <p className="text-[0.85rem] leading-relaxed" style={{ color: 'var(--neutral-600)' }}>{product.care}</p>
+                                    <h5 className="text-[0.8rem] uppercase tracking-widest font-bold text-[var(--cocoa-800)] mb-2">Care & Storage</h5>
+                                    <p className="text-[0.85rem] text-[var(--neutral-600)] leading-relaxed">{product.care}</p>
                                 </div>
                             </div>
                         </div>
@@ -135,11 +135,11 @@ export default function ProductDetailPage() {
                 </div>
 
                 {/* You May Also Like */}
-                <div className="pt-24 border-t" style={{ borderColor: 'var(--gold-100)' }} data-aos="fade-up">
+                <div className="pt-24 border-t border-[var(--gold-100)]" data-aos="fade-up">
                     <div className="section-header text-center mb-16">
-                        <span className="section-header__label" style={{ display: 'block', marginBottom: '1rem' }}>Curated Pairings</span>
-                        <h2 className="section-header__title" style={{ fontSize: '2.5rem' }}>You May Also <em>Like</em></h2>
-                        <div className="section-header__divider justify-center" style={{ display: 'flex' }}>
+                        <span className="section-header__label">Curated Pairings</span>
+                        <h2 className="section-header__title text-4xl">You May Also <em>Like</em></h2>
+                        <div className="section-header__divider justify-center">
                             <span className="gold-line"></span>
                             <span className="gold-line"></span>
                         </div>
@@ -173,8 +173,8 @@ export default function ProductDetailPage() {
                 </div>
             </div>
 
-            <footer className="footer text-white py-12 text-center text-sm border-t mt-24" style={{ backgroundColor: 'var(--cocoa-900)', borderColor: 'var(--gold-500)' }}>
-                <p style={{ margin: 0 }}>&copy; 2026 Ganachery Pâtisserie. Artisanal Excellence.</p>
+            <footer className="footer bg-[var(--cocoa-900)] text-white py-12 text-center text-sm border-t border-[var(--gold-500)] mt-24">
+                &copy; 2026 Ganachery Pâtisserie. Artisanal Excellence.
             </footer>
         </div>
     );
