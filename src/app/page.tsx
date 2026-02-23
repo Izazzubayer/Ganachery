@@ -189,10 +189,6 @@ export default function Home() {
               <a href="#collections" className="btn btn--primary">Explore Collections</a>
               <a href="#story" className="btn btn--ghost">Our Story</a>
             </div>
-            <div className="hero__scroll-indicator" data-aos="fade-up" data-aos-delay="1200">
-              <div className="hero__scroll-line"></div>
-              <span>Scroll to discover</span>
-            </div>
           </div>
         </section>
 
@@ -914,8 +910,8 @@ export default function Home() {
                 </div>
                 <div className="contact__field">
                   <label htmlFor="inquiry-type">Inquiry Type</label>
-                  <select id="inquiry-type" required>
-                    <option value="" disabled selected>Select an option</option>
+                  <select id="inquiry-type" required defaultValue="">
+                    <option value="" disabled>Select an option</option>
                     <option value="wedding">Wedding Gifting</option>
                     <option value="corporate">Corporate Gifting</option>
                     <option value="seasonal">Seasonal / Eid Order</option>
