@@ -1,22 +1,24 @@
 import { shopifyClient } from '@/lib/shopifyClient';
 
 /**
- * Reusable commerce data layer wrapper for Shopify Storefront API
+ * A reusable wrapper for executing Shopify Storefront GraphQL queries.
+ * Handles try/catch logic, neutralizes error responses, and avoids breaking the app on failure.
  * 
- * @param query GraphQL query string
- * @param variables Optional variables for the query
- * @returns Typed response from Shopify
+ * @param query - The GraphQL query string
+ * @param variables - The variables dictionary mapped for the query
+ * @returns {Promise<T>} - The typed data response
  */
 export async function shopifyRequest<T>(query: string, variables?: object): Promise<T> {
     try {
-        const data = await shopifyClient.request<T>(query, variables);
-        return data;
+        const response = await shopifyClient.request<T>(query, variables);
+        return response;
     } catch (error) {
-        // Log meaningful debugging info for developers but avoid exposing internal details to UI
-        console.error('[Shopify API Request Error]:', error);
+        const errMessage = error instanceof Error ? error.message : 'Unknown Shopify error occurred';
 
-        // Normalized error structure handling depending on your needs.
-        // For now, we throw a generic error so the app doesn't crash with raw GraphQL errors.
-        throw new Error('Failed to fetch data from Shopify. Please check your connection and configuration.');
+        // Log meaningful debugging info without crashing the client app
+        console.error('Shopify API Error:', errMessage);
+
+        // Return structured exception or re-throw as safe application-level error
+        throw new Error('Failed to retrieve data from Shopify API. See server logs for details.');
     }
 }

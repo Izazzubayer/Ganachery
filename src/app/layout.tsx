@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   description: "Ganachery is a Bangladeshi artisanal pâtisserie crafting handmade chocolates, premium stuffed dates, and luxury gift boxes. Perfect for weddings, Eid, and corporate gifting.",
 };
 
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { CartProvider } from "@/context/CartContext";
+import CartDrawer from "@/components/cart/CartDrawer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,9 +26,14 @@ export default function RootLayout({
         <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
       </head>
       <body className="antialiased">
-        <SmoothScroll>
-          {children}
-        </SmoothScroll>
+        <CartProvider>
+          <SmoothScroll>
+            <Header />
+            <CartDrawer />
+            <main>{children}</main>
+            <Footer />
+          </SmoothScroll>
+        </CartProvider>
       </body>
     </html>
   );
