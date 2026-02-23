@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Link from 'next/link';
+import { products } from '@/data/products';
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -132,7 +134,7 @@ export default function Home() {
               <a href="#collections" className="nav__link">Collections</a>
               <a href="#story" className="nav__link">Our Story</a>
               <a href="#gifting" className="nav__link">Gifting</a>
-              <a href="#product" className="nav__link">Shop</a>
+              <Link href="/collections" className="nav__link">Shop</Link>
               <a href="#contact" className="nav__link">Contact</a>
             </div>
             <div className="nav__actions">
@@ -158,7 +160,7 @@ export default function Home() {
             <a href="#collections" className="mobile-menu__link">Collections</a>
             <a href="#story" className="mobile-menu__link">Our Story</a>
             <a href="#gifting" className="mobile-menu__link">Gifting</a>
-            <a href="#product" className="mobile-menu__link">Shop</a>
+            <Link href="/collections" className="mobile-menu__link">Shop</Link>
             <a href="#contact" className="mobile-menu__link">Contact</a>
             <div className="mobile-menu__divider"></div>
             <span className="mobile-menu__est">Est. 2020 · Dhaka, Bangladesh</span>
@@ -218,7 +220,7 @@ export default function Home() {
                 <div className="signature__card-image">
                   <img src="/images/truffles-gift-box.jpg" alt="Artisanal Chocolate Truffles Collection" loading="lazy" />
                   <div className="signature__card-overlay">
-                    <span className="btn btn--small btn--gold">Discover</span>
+                    <Link href="/collections" className="btn btn--small btn--gold" style={{color: "var(--cocoa-900)"}}>Discover</Link>
                   </div>
                 </div>
                 <div className="signature__card-content">
@@ -235,7 +237,7 @@ export default function Home() {
                 <div className="signature__card-image">
                   <img src="/images/dates-gift-box.jpg" alt="Premium Stuffed Medjool Dates" loading="lazy" />
                   <div className="signature__card-overlay">
-                    <span className="btn btn--small btn--gold">Discover</span>
+                    <Link href="/collections" className="btn btn--small btn--gold" style={{color: "var(--cocoa-900)"}}>Discover</Link>
                   </div>
                 </div>
                 <div className="signature__card-content">
@@ -252,7 +254,7 @@ export default function Home() {
                 <div className="signature__card-image">
                   <img src="/images/gallery-2.jpg" alt="Petit Fours & Tarts Collection" loading="lazy" />
                   <div className="signature__card-overlay">
-                    <span className="btn btn--small btn--gold">Discover</span>
+                    <Link href="/collections" className="btn btn--small btn--gold" style={{color: "var(--cocoa-900)"}}>Discover</Link>
                   </div>
                 </div>
                 <div className="signature__card-content">
@@ -269,7 +271,7 @@ export default function Home() {
                 <div className="signature__card-image">
                   <img src="/images/chocolate-strawberries.jpg" alt="Chocolate Covered Strawberries" loading="lazy" />
                   <div className="signature__card-overlay">
-                    <span className="btn btn--small btn--gold">Discover</span>
+                    <Link href="/collections" className="btn btn--small btn--gold" style={{color: "var(--cocoa-900)"}}>Discover</Link>
                   </div>
                 </div>
                 <div className="signature__card-content">
@@ -283,7 +285,7 @@ export default function Home() {
             </div>
 
             <div className="signature__cta" data-aos="fade-up">
-              <a href="#product" className="btn btn--primary">View All Collections</a>
+              <Link href="/collections" className="btn btn--primary">View All Collections</Link>
             </div>
           </div>
         </section>
@@ -374,7 +376,7 @@ export default function Home() {
                 <div className="giftboxes__main-overlay">
                   <h3>Dessert Selections</h3>
                   <p>Our flagship gift box. A curated journey through truffles, dates, brownies, and beyond.</p>
-                  <a href="#product" className="btn btn--gold">Explore This Box</a>
+                  <Link href="/product/dessert-selections" className="btn btn--gold">Explore This Box</Link>
                 </div>
               </div>
               <div className="giftboxes__side">
@@ -480,7 +482,7 @@ export default function Home() {
                   A curated offering of premium Medjool dates stuffed with Hazelnut Praline, Gur, and Coconut, alongside
                   artisanal truffles and festive assortments. Available for a limited time.
                 </p>
-                <a href="#product" className="btn btn--primary">Shop Ramadan Collection</a>
+                <Link href="/product/ramadan-collection" className="btn btn--primary">Shop Ramadan Collection</Link>
               </div>
               <div className="seasonal__image">
                 <img src="/images/gallery-14.jpg" alt="Ramadan Collection" loading="lazy" />
@@ -511,221 +513,51 @@ export default function Home() {
 
 
             <div className="product__filters" data-aos="fade-up">
-              <button className="product__filter product__filter--active" data-filter="all">All</button>
-              <button className="product__filter" data-filter="chocolates">Chocolates</button>
-              <button className="product__filter" data-filter="dates">Dates</button>
-              <button className="product__filter" data-filter="giftbox">Gift Boxes</button>
-              <button className="product__filter" data-filter="patisserie">Pâtisserie</button>
+              {['all', 'chocolates', 'dates', 'giftbox', 'patisserie', 'seasonal'].map((filter) => (
+                <button 
+                  key={filter}
+                  className={`product__filter ${activeFilter === filter ? 'product__filter--active' : ''}`}
+                  onClick={() => filterCards(filter)}
+                  style={{textTransform: 'capitalize'}}
+                >
+                  {filter === 'giftbox' ? 'Gift Boxes' : filter}
+                </button>
+              ))}
             </div>
 
-
             <div className="product__grid">
-
-              <div className="product__card" data-category="chocolates" data-aos="fade-up" data-aos-delay="100">
-                <div className="product__card-image">
-                  <img src="/images/truffles-gift-box.jpg" alt="Signature Truffle Box - 25 Pieces" loading="lazy" />
-                  <div className="product__card-badges">
-                    <span className="product__badge product__badge--bestseller">Bestseller</span>
+              {products.slice(0, 6).map((product, index) => (
+                <div className="product__card" data-category={product.category} data-aos="fade-up" data-aos-delay={(index % 4) * 100} key={product.id}>
+                  <div className="product__card-image" style={{ aspectRatio: '4/5', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                    <img src={product.image} alt={product.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    {product.badge && (
+                      <div className="product__card-badges">
+                        <span className={`product__badge product__badge--${product.badge.toLowerCase()}`}>{product.badge}</span>
+                      </div>
+                    )}
+                    <div className="product__card-actions">
+                      <Link href={`/product/${product.id}`} className="product__quick-view" aria-label="View Details" style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'black'}}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                      </Link>
+                    </div>
                   </div>
-                  <div className="product__card-actions">
-                    <button className="product__quick-view" aria-label="Quick View">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button className="product__add-to-cart" aria-label="Add to Cart">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-                        <line x1="3" y1="6" x2="21" y2="6" />
-                        <path d="M16 10a4 4 0 01-8 0" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div className="product__card-info">
-                  <span className="product__card-category">Chocolates</span>
-                  <h3 className="product__card-name">Signature Truffle Box</h3>
-                  <p className="product__card-variant">25 Pieces · Assorted</p>
-                  <div className="product__card-bottom">
-                    <span className="product__card-price">৳ 3,200</span>
-                    <button className="product__card-btn">Add to Box</button>
+                  <div className="product__card-info">
+                    <span className="product__card-category" style={{textTransform: 'capitalize'}}>{product.category}</span>
+                    <h3 className="product__card-name">{product.name}</h3>
+                    <p className="product__card-variant">{product.variant}</p>
+                    <div className="product__card-bottom" style={{marginTop: '1rem'}}>
+                      <span className="product__card-price">{product.price}</span>
+                      <Link href={`/product/${product.id}`} className="btn btn--small btn--primary flex items-center justify-center">Details</Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-
-              <div className="product__card" data-category="dates" data-aos="fade-up" data-aos-delay="200">
-                <div className="product__card-image">
-                  <img src="/images/gallery-6.jpg" alt="Premium Medjool Dates Collection" loading="lazy" />
-                  <div className="product__card-badges">
-                    <span className="product__badge product__badge--new">New</span>
-                  </div>
-                  <div className="product__card-actions">
-                    <button className="product__quick-view" aria-label="Quick View">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button className="product__add-to-cart" aria-label="Add to Cart">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-                        <line x1="3" y1="6" x2="21" y2="6" />
-                        <path d="M16 10a4 4 0 01-8 0" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div className="product__card-info">
-                  <span className="product__card-category">Dates</span>
-                  <h3 className="product__card-name">Premium Medjool Dates</h3>
-                  <p className="product__card-variant">20 Pieces · 4 Flavours</p>
-                  <div className="product__card-bottom">
-                    <span className="product__card-price">৳ 2,800</span>
-                    <button className="product__card-btn">Add to Box</button>
-                  </div>
-                </div>
-              </div>
-
-
-              <div className="product__card" data-category="giftbox" data-aos="fade-up" data-aos-delay="300">
-                <div className="product__card-image">
-                  <img src="/images/brownies-strawberries-box.jpg" alt="Grand Assortment Gift Box" loading="lazy" />
-                  <div className="product__card-badges">
-                    <span className="product__badge product__badge--limited">Limited</span>
-                  </div>
-                  <div className="product__card-actions">
-                    <button className="product__quick-view" aria-label="Quick View">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button className="product__add-to-cart" aria-label="Add to Cart">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-                        <line x1="3" y1="6" x2="21" y2="6" />
-                        <path d="M16 10a4 4 0 01-8 0" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div className="product__card-info">
-                  <span className="product__card-category">Gift Box</span>
-                  <h3 className="product__card-name">Grand Assortment</h3>
-                  <p className="product__card-variant">Strawberries · Brownies · Dates</p>
-                  <div className="product__card-bottom">
-                    <span className="product__card-price">৳ 4,800</span>
-                    <button className="product__card-btn">Add to Box</button>
-                  </div>
-                </div>
-              </div>
-
-
-              <div className="product__card" data-category="patisserie" data-aos="fade-up" data-aos-delay="400">
-                <div className="product__card-image">
-                  <img src="/images/cheesecake.jpg" alt="Basque Burnt Cheesecake" loading="lazy" />
-                  <div className="product__card-badges">
-                    <span className="product__badge product__badge--bestseller">Bestseller</span>
-                  </div>
-                  <div className="product__card-actions">
-                    <button className="product__quick-view" aria-label="Quick View">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button className="product__add-to-cart" aria-label="Add to Cart">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-                        <line x1="3" y1="6" x2="21" y2="6" />
-                        <path d="M16 10a4 4 0 01-8 0" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div className="product__card-info">
-                  <span className="product__card-category">Pâtisserie</span>
-                  <h3 className="product__card-name">Basque Burnt Cheesecake</h3>
-                  <p className="product__card-variant">7 inch · Serves 8-10</p>
-                  <div className="product__card-bottom">
-                    <span className="product__card-price">৳ 2,500</span>
-                    <button className="product__card-btn">Add to Box</button>
-                  </div>
-                </div>
-              </div>
-
-
-              <div className="product__card" data-category="chocolates" data-aos="fade-up" data-aos-delay="100">
-                <div className="product__card-image">
-                  <img src="/images/gallery-10.jpg" alt="Artisan Chocolate Bars" loading="lazy" />
-                  <div className="product__card-actions">
-                    <button className="product__quick-view" aria-label="Quick View">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button className="product__add-to-cart" aria-label="Add to Cart">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-                        <line x1="3" y1="6" x2="21" y2="6" />
-                        <path d="M16 10a4 4 0 01-8 0" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div className="product__card-info">
-                  <span className="product__card-category">Chocolates</span>
-                  <h3 className="product__card-name">Artisan Chocolate Bars</h3>
-                  <p className="product__card-variant">Set of 2 · Dark & Milk</p>
-                  <div className="product__card-bottom">
-                    <span className="product__card-price">৳ 1,800</span>
-                    <button className="product__card-btn">Add to Box</button>
-                  </div>
-                </div>
-              </div>
-
-
-              <div className="product__card" data-category="giftbox" data-aos="fade-up" data-aos-delay="200">
-                <div className="product__card-image">
-                  <img src="/images/gallery-4.jpg" alt="Dessert Selections Premium Box" loading="lazy" />
-                  <div className="product__card-badges">
-                    <span className="product__badge product__badge--bestseller">Bestseller</span>
-                  </div>
-                  <div className="product__card-actions">
-                    <button className="product__quick-view" aria-label="Quick View">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button className="product__add-to-cart" aria-label="Add to Cart">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-                        <line x1="3" y1="6" x2="21" y2="6" />
-                        <path d="M16 10a4 4 0 01-8 0" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div className="product__card-info">
-                  <span className="product__card-category">Gift Box</span>
-                  <h3 className="product__card-name">Dessert Selections</h3>
-                  <p className="product__card-variant">Flagship · Truffles, Dates & More</p>
-                  <div className="product__card-bottom">
-                    <span className="product__card-price">৳ 5,500</span>
-                    <button className="product__card-btn">Add to Box</button>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
-
-
-
 
         <section className="testimonials">
           <div className="container">
