@@ -23,6 +23,7 @@ export interface Product {
     title: string;
     handle: string;
     description: string;
+    productType?: string;
     availableForSale: boolean;
     featuredImage: Image | null;
     images: {

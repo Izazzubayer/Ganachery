@@ -9,6 +9,11 @@ import { shopifyClient } from '@/lib/shopifyClient';
  * @returns {Promise<T>} - The typed data response
  */
 export async function shopifyRequest<T>(query: string, variables?: object): Promise<T> {
+    if (!process.env.SHOPIFY_STORE_DOMAIN) {
+        console.warn('Shopify request skipped: SHOPIFY_STORE_DOMAIN is not defined.');
+        return null as unknown as T;
+    }
+
     try {
         const response = await shopifyClient.request<T>(query, variables);
         return response;

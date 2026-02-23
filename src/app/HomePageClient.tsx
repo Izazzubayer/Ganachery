@@ -442,6 +442,7 @@ export default function HomePageClient({ initialProducts }: { initialProducts: P
                 <button
                   key={filter}
                   className={`product__filter ${activeFilter === filter ? 'product__filter--active' : ''}`}
+                  data-filter={filter}
                   onClick={() => filterCards(filter)}
                   style={{ textTransform: 'capitalize' }}
                 >
@@ -457,7 +458,7 @@ export default function HomePageClient({ initialProducts }: { initialProducts: P
                 </div>
               ) : (
                 initialProducts.map((product, index) => (
-                  <div className="product__card" data-category="chocolates" data-aos="fade-up" data-aos-delay={(index % 4) * 100} key={product.id}>
+                  <div className="product__card" data-category={product.productType || 'chocolates'} data-aos="fade-up" data-aos-delay={(index % 4) * 100} key={product.id}>
                     <div className="product__card-image" style={{ aspectRatio: '4/5', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                       {product.featuredImage ? (
                         <img src={product.featuredImage.url} alt={product.featuredImage.altText || product.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -480,7 +481,7 @@ export default function HomePageClient({ initialProducts }: { initialProducts: P
                       </div>
                     </div>
                     <div className="product__card-info">
-                      <span className="product__card-category" style={{ textTransform: 'capitalize' }}>Boutique</span>
+                      <span className="product__card-category" style={{ textTransform: 'capitalize' }}>{product.productType || 'Boutique'}</span>
                       <h3 className="product__card-name">{product.title}</h3>
                       <div className="product__card-bottom" style={{ marginTop: '1rem' }}>
                         <span className="product__card-price">

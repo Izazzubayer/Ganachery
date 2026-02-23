@@ -6,7 +6,7 @@ const domain = process.env.SHOPIFY_STORE_DOMAIN;
 // Ensure environment variables are configured in Vercel
 const token = process.env.SHOPIFY_STOREFRONT_TOKEN;
 
-const endpoint = domain ? `https://${domain}/api/2024-01/graphql.json` : '';
+const endpoint = domain ? `https://${domain}/api/2024-01/graphql.json` : 'https://placeholder.myshopify.com/api/2024-01/graphql.json';
 
 if (!domain || !token) {
     console.warn('⚠️ Shopify Storefront credentials missing from environment variables.');
