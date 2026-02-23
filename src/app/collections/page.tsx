@@ -46,7 +46,7 @@ export default function CollectionsPage() {
                 </div>
             </nav>
 
-            <section className="product pt-40 pb-24 min-h-screen bg-[var(--ivory-100)]" id="product">
+            <section className="product" style={{ paddingTop: '10rem', paddingBottom: '6rem', minHeight: '100vh', background: 'var(--ivory-100)' }} id="product">
                 <div className="container">
                     <div className="section-header" data-aos="fade-up">
                         <span className="section-header__label">The Boutique</span>
@@ -109,7 +109,7 @@ export default function CollectionsPage() {
                 </div>
             </section>
 
-            <footer className="footer bg-[var(--cocoa-900)] text-white py-12 text-center text-sm border-t border-[var(--gold-500)]">
+            <footer className="footer" style={{ background: 'var(--cocoa-900)', color: 'white', padding: '3rem 0', textAlign: 'center', fontSize: '0.875rem', borderTop: '1px solid var(--gold-500)' }}>
                 &copy; 2026 Ganachery Pâtisserie. Artisanal Excellence.
             </footer>
         </>

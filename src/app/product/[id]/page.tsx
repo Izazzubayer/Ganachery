@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { products } from '@/data/products';
+import '@/app/product-detail.css'; // Import the new styles
 
 export default function ProductDetailPage() {
     const params = useParams();
@@ -19,8 +20,8 @@ export default function ProductDetailPage() {
 
     if (!product) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-[var(--ivory-100)] flex-col gap-4">
-                <h1 className="text-2xl font-[var(--font-heading)]">Product Not Found</h1>
+            <div className="product-detail" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
+                <h1 className="product-detail__title" style={{ fontSize: '2rem' }}>Product Not Found</h1>
                 <Link href="/collections" className="btn btn--primary">Back to Collections</Link>
             </div>
         );
@@ -34,8 +35,8 @@ export default function ProductDetailPage() {
     }
 
     return (
-        <div className="bg-[var(--ivory-100)] min-h-screen">
-            <nav className="nav nav--scrolled relative" id="main-nav" style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(26, 14, 10, 0.95)' }}>
+        <div className="product-detail">
+            <nav className="nav nav--scrolled" id="main-nav" style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(26, 14, 10, 0.95)' }}>
                 <div className="nav__inner">
                     <Link href="/" className="nav__logo">
                         <span className="nav__logo-text">Ganachery</span>
@@ -58,76 +59,74 @@ export default function ProductDetailPage() {
                 </div>
             </nav>
 
-            <div className="container py-16 md:py-24">
+            <div className="container" style={{ paddingTop: '80px', paddingBottom: '80px' }}>
                 {/* Breadcrumb */}
-                <div className="text-[0.65rem] uppercase tracking-widest text-[var(--neutral-500)] mb-12" data-aos="fade-in">
-                    <Link href="/" className="hover:text-[var(--gold-500)]">Home</Link>
-                    <span className="mx-2">/</span>
-                    <Link href="/collections" className="hover:text-[var(--gold-500)]">Collections</Link>
-                    <span className="mx-2">/</span>
-                    <span className="text-[var(--gold-500)]">{product.name}</span>
+                <div className="product-detail__breadcrumb" data-aos="fade-in">
+                    <Link href="/">Home</Link>
+                    <span>/</span>
+                    <Link href="/collections">Collections</Link>
+                    <span>/</span>
+                    <span className="current">{product.name}</span>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-32">
+                <div className="product-detail__grid">
                     {/* Image Gallery */}
-                    <div className="relative" data-aos="fade-right">
-                        <div className="aspect-[4/5] rounded-lg overflow-hidden shadow-[var(--shadow-xl)] bg-white relative">
-                            {product.badge && (
-                                <div className="absolute top-6 left-6 z-10 bg-[var(--gold-500)] text-[var(--cocoa-900)] text-[0.65rem] font-bold uppercase tracking-widest px-4 py-2 rounded-sm">
-                                    {product.badge}
-                                </div>
-                            )}
-                            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-                        </div>
+                    <div className="product-detail__image-wrapper" data-aos="fade-right">
+                        {product.badge && (
+                            <div className="product-detail__badge">
+                                {product.badge}
+                            </div>
+                        )}
+                        <img src={product.image} alt={product.name} loading="eager" />
                     </div>
 
                     {/* Product Info */}
-                    <div className="flex flex-col justify-center" data-aos="fade-left">
-                        <span className="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-[var(--gold-500)] mb-4">{product.category}</span>
-                        <h1 className="font-[var(--font-heading)] text-4xl md:text-5xl lg:text-6xl font-light text-[var(--cocoa-800)] leading-tight mb-4">{product.name}</h1>
-                        <div className="text-[var(--gold-500)] tracking-widest text-sm mb-4">★★★★★ <span className="text-[var(--neutral-400)] text-xs ml-2">(Boutique Reviews)</span></div>
-                        <p className="text-xl font-bold text-[var(--cocoa-600)] tracking-widest mb-8">{product.price}</p>
+                    <div className="product-detail__info" data-aos="fade-left">
+                        <span className="product-detail__category">{product.category}</span>
+                        <h1 className="product-detail__title">{product.name}</h1>
+                        <div className="product-detail__reviews">★★★★★ <span>(Boutique Reviews)</span></div>
+                        <p className="product-detail__price">{product.price}</p>
 
-                        <p className="text-[0.95rem] text-[var(--neutral-600)] leading-loose mb-10 pb-10 border-b border-[var(--gold-100)]">
+                        <p className="product-detail__desc">
                             {product.longDescription}
                         </p>
 
-                        <div className="mb-10">
-                            <h4 className="text-[0.7rem] uppercase tracking-widest font-bold text-[var(--cocoa-800)] mb-4">Variant</h4>
-                            <div className="inline-block border border-[var(--gold-500)] text-[var(--cocoa-800)] px-6 py-3 rounded-md text-sm font-medium bg-[var(--gold-100)]">
+                        <div className="product-detail__variant-group">
+                            <span className="product-detail__variant-label">Variant</span>
+                            <div className="product-detail__variant">
                                 {product.variant}
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-6 mb-12">
-                            <div className="flex items-center border border-[var(--neutral-300)] rounded-md h-14">
-                                <button className="px-5 text-lg" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
-                                <span className="w-8 text-center font-bold">{qty}</span>
-                                <button className="px-5 text-lg" onClick={() => setQty(q => q + 1)}>+</button>
+                        <div className="product-detail__actions">
+                            <div className="product-detail__qty">
+                                <button className="product-detail__qty-btn" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
+                                <div className="product-detail__qty-val">{qty}</div>
+                                <button className="product-detail__qty-btn" onClick={() => setQty(q => q + 1)}>+</button>
                             </div>
-                            <button className="btn btn--primary flex-1 h-14 text-[0.8rem]" style={{ margin: 0 }}>
+                            <button className="btn btn--primary product-detail__add-btn">
                                 Add to Box — {product.price}
                             </button>
                         </div>
 
-                        <div className="bg-[var(--ivory-200)] p-6 md:p-8 rounded-lg">
-                            <div className="flex items-start gap-4 mb-6">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold-500)" strokeWidth="1.5" className="flex-shrink-0 mt-1">
+                        <div className="product-detail__meta">
+                            <div className="product-detail__meta-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="product-detail__meta-icon">
                                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                 </svg>
                                 <div>
-                                    <h5 className="text-[0.8rem] uppercase tracking-widest font-bold text-[var(--cocoa-800)] mb-2">Artisanal Ingredients</h5>
-                                    <p className="text-[0.85rem] text-[var(--neutral-600)] leading-relaxed">{product.ingredients}</p>
+                                    <h5 className="product-detail__meta-title">Artisanal Ingredients</h5>
+                                    <p className="product-detail__meta-text">{product.ingredients}</p>
                                 </div>
                             </div>
-                            <div className="flex items-start gap-4">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold-500)" strokeWidth="1.5" className="flex-shrink-0 mt-1">
+                            <div className="product-detail__meta-item" style={{ marginBottom: 0 }}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="product-detail__meta-icon">
                                     <circle cx="12" cy="12" r="10" />
                                     <polyline points="12 6 12 12 16 14" />
                                 </svg>
                                 <div>
-                                    <h5 className="text-[0.8rem] uppercase tracking-widest font-bold text-[var(--cocoa-800)] mb-2">Care & Storage</h5>
-                                    <p className="text-[0.85rem] text-[var(--neutral-600)] leading-relaxed">{product.care}</p>
+                                    <h5 className="product-detail__meta-title">Care & Storage</h5>
+                                    <p className="product-detail__meta-text">{product.care}</p>
                                 </div>
                             </div>
                         </div>
@@ -135,11 +134,11 @@ export default function ProductDetailPage() {
                 </div>
 
                 {/* You May Also Like */}
-                <div className="pt-24 border-t border-[var(--gold-100)]" data-aos="fade-up">
-                    <div className="section-header text-center mb-16">
+                <div className="product-detail__related" data-aos="fade-up">
+                    <div className="section-header" style={{ textAlign: 'center', marginBottom: 'var(--space-4xl)' }}>
                         <span className="section-header__label">Curated Pairings</span>
-                        <h2 className="section-header__title text-4xl">You May Also <em>Like</em></h2>
-                        <div className="section-header__divider justify-center">
+                        <h2 className="section-header__title">You May Also <em>Like</em></h2>
+                        <div className="section-header__divider" style={{ justifyContent: 'center' }}>
                             <span className="gold-line"></span>
                             <span className="gold-line"></span>
                         </div>
@@ -162,9 +161,9 @@ export default function ProductDetailPage() {
                                 <div className="product__card-info">
                                     <span className="product__card-category" style={{ textTransform: 'capitalize' }}>{rel.category}</span>
                                     <h3 className="product__card-name">{rel.name}</h3>
-                                    <div className="product__card-bottom mt-4">
+                                    <div className="product__card-bottom" style={{ marginTop: '1rem' }}>
                                         <span className="product__card-price">{rel.price}</span>
-                                        <Link href={`/product/${rel.id}`} className="btn btn--small btn--primary">View</Link>
+                                        <Link href={`/product/${rel.id}`} className="btn btn--small btn--primary flex items-center justify-center">View</Link>
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +172,7 @@ export default function ProductDetailPage() {
                 </div>
             </div>
 
-            <footer className="footer bg-[var(--cocoa-900)] text-white py-12 text-center text-sm border-t border-[var(--gold-500)] mt-24">
+            <footer className="footer" style={{ background: 'var(--cocoa-900)', color: 'white', padding: '3rem 0', textAlign: 'center', fontSize: '0.875rem', borderTop: '1px solid var(--gold-500)', marginTop: 'var(--space-5xl)' }}>
                 &copy; 2026 Ganachery Pâtisserie. Artisanal Excellence.
             </footer>
         </div>
